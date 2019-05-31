@@ -74,54 +74,15 @@
                 <p class="yishuFont">席位</p>
                 <div class="seat">
                   <div class="seatSroll">
-                    <span>
+                    <span v-for="(val,index) in AllXi">
                       <div class="Image_BoxScroll">
-                        <img src="../../assets/img/denglu.png" alt="" srcset="">
-                         <div class="meng">
+                        <img :src="val.image" alt="" srcset="">
+                        <div class="ban" :class="val.status === 1 ? '':'active'"></div>
+                         <div class="meng" v-on:click="changeXi(val.id,index)">
                           <img src="../../assets/img/changeZ.png" alt="">
                         </div>
                       </div>
-                      <em>1号桌</em>
-
-                    </span>
-                    <span>
-                      <div class="Image_BoxScroll">
-                        <img src="../../assets/img/denglu.png" alt="" srcset="">
-                         <div class="meng">
-                          <img src="../../assets/img/changeZ.png" alt="">
-                        </div>
-                      </div>
-                      <em>1号桌</em>
-
-                    </span>
-                    <span>
-                      <div class="Image_BoxScroll">
-                        <img src="../../assets/img/denglu.png" alt="" srcset="">
-                         <div class="meng">
-                          <img src="../../assets/img/changeZ.png" alt="">
-                        </div>
-                      </div>
-                      <em>1号桌</em>
-
-                    </span>
-                    <span>
-                      <div class="Image_BoxScroll">
-                        <img src="../../assets/img/denglu.png" alt="" srcset="">
-                         <div class="meng">
-                          <img src="../../assets/img/changeZ.png" alt="">
-                        </div>
-                      </div>
-                      <em>1号桌</em>
-
-                    </span>
-                    <span>
-                      <div class="Image_BoxScroll">
-                        <img src="../../assets/img/denglu.png" alt="" srcset="">
-                         <div class="meng">
-                          <img src="../../assets/img/changeZ.png" alt="">
-                        </div>
-                      </div>
-                      <em>1号桌</em>
+                      <em>{{val.name}}</em>
 
                     </span>
                   </div>
@@ -152,192 +113,7 @@ export default {
     name: 'stateScreen',
     data(){
         return {
-            tableData: [{
-            date: '1号桌',
-            name: '白茶',
-            num: 'X2',
-            operation:''
-            },{
-              date: '1号桌',
-              name: '白茶',
-              num: 'X2',
-              operation:''
-            },{
-              date: '1号桌',
-              name: '白茶',
-              num: 'X2',
-              operation:''
-            },{
-              date: '1号桌',
-              name: '白茶',
-              num: 'X2',
-              operation:''
-            },{
-              date: '1号桌',
-              name: '白茶',
-              num: 'X2',
-              operation:''
-            },{
-              date: '1号桌',
-              name: '白茶',
-              num: 'X2',
-              operation:''
-            },{
-              date: '1号桌',
-              name: '白茶',
-              num: 'X2',
-              operation:''
-            },{
-              date: '1号桌',
-              name: '白茶',
-              num: 'X2',
-              operation:''
-            },{
-              date: '1号桌',
-              name: '白茶',
-              num: 'X2',
-              operation:''
-            },{
-              date: '1号桌',
-              name: '白茶',
-              num: 'X2',
-              operation:''
-            },{
-              date: '1号桌',
-              name: '白茶',
-              num: 'X2',
-              operation:''
-            },{
-              date: '1号桌',
-              name: '白茶',
-              num: 'X2',
-              operation:''
-            },{
-              date: '1号桌',
-              name: '白茶',
-              num: 'X2',
-              operation:''
-            },{
-              date: '1号桌',
-              name: '白茶',
-              num: 'X2',
-              operation:''
-            },{
-              date: '1号桌',
-              name: '白茶',
-              num: 'X2',
-              operation:''
-            },{
-              date: '1号桌',
-              name: '白茶',
-              num: 'X2',
-              operation:''
-            },{
-              date: '1号桌',
-              name: '白茶',
-              num: 'X2',
-              operation:''
-            },{
-              date: '1号桌',
-              name: '白茶',
-              num: 'X2',
-              operation:''
-            },{
-              date: '1号桌',
-              name: '白茶',
-              num: 'X2',
-              operation:''
-            },{
-              date: '1号桌',
-              name: '白茶',
-              num: 'X2',
-              operation:''
-            },{
-              date: '1号桌',
-              name: '白茶',
-              num: 'X2',
-              operation:''
-            },{
-              date: '1号桌',
-              name: '白茶',
-              num: 'X2',
-              operation:''
-            },{
-              date: '1号桌',
-              name: '白茶',
-              num: 'X2',
-              operation:''
-            },{
-              date: '1号桌',
-              name: '白茶',
-              num: 'X2',
-              operation:''
-            },{
-              date: '1号桌',
-              name: '白茶',
-              num: 'X2',
-              operation:''
-            },{
-              date: '1号桌',
-              name: '白茶',
-              num: 'X2',
-              operation:''
-            },{
-              date: '1号桌',
-              name: '白茶',
-              num: 'X2',
-              operation:''
-            },{
-              date: '1号桌',
-              name: '白茶',
-              num: 'X2',
-              operation:''
-            },{
-              date: '1号桌',
-              name: '白茶',
-              num: 'X2',
-              operation:''
-            },{
-              date: '1号桌',
-              name: '白茶',
-              num: 'X2',
-              operation:''
-            },{
-              date: '1号桌',
-              name: '白茶',
-              num: 'X2',
-              operation:''
-            },{
-              date: '1号桌',
-              name: '白茶',
-              num: 'X2',
-              operation:''
-            },{
-              date: '1号桌',
-              name: '白茶',
-              num: 'X2',
-              operation:''
-            },],
-
-          ff:[
-            {
-              radio:'1'
-            },
-            {
-              radio:'1'
-            },
-            {
-              radio:'1'
-            },
-            {
-              radio:'1'
-            },
-            {
-              radio:'1'
-            },{
-              radio:'1'
-            }
-          ],
+          tableData: [],
           radio:'1',
 
 
@@ -354,6 +130,7 @@ export default {
             spinner: 'el-icon-loading',
             background: 'rgba(0, 0, 0, 0.7)'
           },   //加载
+          AllXi:[]
         }
     },
     methods: {
@@ -362,7 +139,8 @@ export default {
           "pay_status": 3
         }
         this.$http.put(this.$conf.env.OrderListToady + row.order  + '/',OrderID).then(res => {
-          if (res.status === 201) {
+          if (res.status === 200) {
+            console.log()
             this.tableData.splice(index,1)
           }
         }).catch(err => {
@@ -445,10 +223,30 @@ export default {
 
 
 
+      //改变席位状态
+      changeXi(id,index){
+
+        this.loadIngs = Loading.service(this.Options);
+        let params = {}
+        this.$http.put(this.$conf.env.ChangeXiStatus + id + '/', params).then( res =>{
+          if(res.status === 200){
+            if(this.AllXi[index].status === 1){
+              this.AllXi[index].status = 2
+            }else{
+              this.AllXi[index].status = 1
+            }
+
+            this.loadIngs.close();
+          }
+        }).catch( err =>{
+        })
+
+      },
 
 
 
-      //请求快递订单   今日茶单   现场未处理订单
+
+      //请求快递订单   今日茶单   现场未处理订单   所有席位
       OrderList(){
         console.log('执行')
         this.$http.get(this.$conf.env.OrderList).then( res =>{
@@ -476,6 +274,22 @@ export default {
         }).catch( err =>{
         })
 
+
+
+
+
+
+        //请求所有席位
+
+        this.$http.get(this.$conf.env.XIList).then( res =>{
+          if(res.status === 200){
+            console.log(res.data)
+            this.AllXi = res.data
+
+
+          }
+        }).catch( err =>{
+        })
 
 
 
@@ -825,6 +639,19 @@ export default {
                         width: .72rem;
                         height: .73rem;
                         position: relative;
+                        .ban{
+                          width: .72rem;
+                          height: .73rem;
+                          position: absolute;
+                          left: 0;
+                          top: 0;
+                          background:rgba(0,0,0,1);
+                          opacity: .6;
+                          display: none;
+                          &.active{
+                            display: block;
+                          }
+                        }
                         .meng{
                           width: .72rem;
                           height: .73rem;
