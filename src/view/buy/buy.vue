@@ -17,6 +17,8 @@
               style="width: 100%">
               <el-table-column
                 prop="id"
+                type="index"
+                :index="getIndex"
                 label="序号">
               </el-table-column>
               <el-table-column
@@ -44,7 +46,7 @@
           <el-pagination
           background
           layout="prev, pager, next"
-          :page-size= 10
+          :page-size= 'perPage'
           :total="amimlNuber"
           @current-change='changePage'
           prev-text='<<'
@@ -75,6 +77,7 @@ import headerTitle from "../../components/header/header"
         isLoading: true,
         pageNumber : 1,
         editBuy: true,
+        perPage: 10,
         behalfID: -1
       }
     },
@@ -126,6 +129,9 @@ import headerTitle from "../../components/header/header"
         this.isLoading = true
         this.getAnimalList(numpage)
         this.pageNumber = numpage
+      },
+       getIndex(index){
+        return (this.pageNumber - 1) * this.perPage + index + 1
       }
     },
     mounted(){

@@ -17,6 +17,8 @@
               style="width: 100%">
               <el-table-column
                 prop="id"
+                type="index"
+                :index="getIndex"
                 label="序号">
               </el-table-column>
               <el-table-column
@@ -62,7 +64,7 @@
           <el-pagination
           background
           layout="prev, pager, next"
-          :page-size= 10
+          :page-size= 'perPage'
           :total="activelyNumber"
           @current-change='changePage'
           prev-text='<<'
@@ -104,7 +106,8 @@ import headerTitle from './../../components/header/header'
         previousPage: '',//上一页
         nextPage: '',//下一页
         pageNumber : 0 ,//当前页数
-        currentPage: 1
+        currentPage: 1,
+        perPage: 10
       }
     },
     methods: {
@@ -171,6 +174,9 @@ import headerTitle from './../../components/header/header'
         this.isLoading = true
         this.getActivelyList(pageNumber)
         this.currentPage = pageNumber
+      },
+      getIndex(index){
+        return (this.currentPage - 1) * this.perPage + index + 1
       }
     },
     mounted(){
