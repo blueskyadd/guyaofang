@@ -227,6 +227,7 @@
           if(ObjData.info.id != "" || ObjData.info.id != undefined){
             this.dan.push(ObjData.info)
           }
+           this.removeDom()
         },
         websocketclose() {  //关闭
           console.log("WebSocket关闭");
