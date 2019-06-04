@@ -38,6 +38,8 @@
           layout="prev, pager, next"
           :page-size= 10
           :total="seatNumber"
+          prev-text="<<"
+          next-text=">>"
           @current-change="changePage"
         ></el-pagination>
         </div>
@@ -167,6 +169,13 @@ export default {
   border-radius: 50% !important;
   width: 0.32rem !important;
   height: 0.32rem !important;
+  min-width: .32rem!important;
+  min-height: .32rem;
+  span{
+        min-width: .32rem!important;
+        line-height: .32rem!important;
+        height: .32rem!important;
+      }
 }
 .order-box {
   display: flex;

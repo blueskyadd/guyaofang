@@ -153,6 +153,7 @@ export default {
       this.$message.error("最多添加一张图片");
     },
     submit() {
+      if(!this.VerificationData()) return
       var params = new FormData();
       params.append("name", this.activelyClassifityName);
       this.addAttachmentActiveImgList.length>0 ? params.append("click_img", '') : params.append("click_img", this.addAttachmentActiveImg);
@@ -161,6 +162,18 @@ export default {
       this.ClassifityID != -1
         ? this.updataProjectCategory(params)
         : this.addProjectCategory(params);
+    },
+    VerificationData(){
+      if(
+        !this.activelyClassifityName ||
+        !this.addAttachmentActiveImg || 
+        !this.addAttachmentImg
+      ){
+         this.$message({ message: '请完善您的信息', type: 'warning'});
+          return false
+      }else{
+        return true
+      }
     },
     addProjectCategory(params) {
       this.$http
@@ -281,7 +294,8 @@ export default {
     }
     button {
       width: 1.71rem;
-      height: 0.39rem;
+       height: .39rem;
+      line-height: .39rem;
       background: rgba(127, 99, 244, 1);
       border-radius: 3px;
       position: absolute;
@@ -393,7 +407,7 @@ export default {
             position: relative;
             background: url("../../assets/img/addphoto.png") no-repeat;
             background-size: cover;
-            border: 0;
+                border: 1px dashed #fff;
             i {
               /*position: absolute;*/
               /*left: 0.26rem;*/

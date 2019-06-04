@@ -175,6 +175,7 @@ export default {
       required: true
     }
   },
+  inject: ["reload"],
   data() {
     return {
       pickerOptions2: {
@@ -237,9 +238,6 @@ export default {
           'image': files
         };
         switch (flag) {
-          case "1":
-            this.actively.activelyBanner.push(obj);
-            break;
           case "2":
             this.actively.activelyProjectImg.push(obj);
             break;
@@ -253,19 +251,60 @@ export default {
     /**@删除图片 */
     //删除主题照片
     handleRemove(file, fileList) {
-      this.actively.activelyBanner = fileList
+      this.actively.activelyBanner = ''
+      this.activelyBannerList=[]
     },
 
     //删除商品照片
     handleRemoveProject(file, fileList){
       this.actively.activelyProjectImg = fileList
+      if (file.id) {
+        this.isLoading = true;
+        this.deleteProjectImg(file.id);
+      }
     },
-
+    deleteProjectImg(ID) {
+      this.$http
+        .delete(this.$conf.env.deleteProjectImg + ID)
+        .then(res => {
+          this.isLoading = false;
+          if (res.status == "202") {
+            this.$message({ message: "删除成功", type: "success" });
+            // this.getProjectDetail()
+          }else{
+            this.$message({ message: '删除失败', type: 'warning'});
+          }
+        })
+        .catch(err => {
+          this.isLoading = false;
+          this.$message.error("网络错误");
+        });
+    },
     //删除海报照片
     handleRemovePoster(file, fileList){
       this.actively.activelyPosterImg = fileList
+      if (file.id) {
+        this.isLoading = true;
+        this.deleteProjectdetailImg(file.id);
+      }
     },
-
+    deleteProjectdetailImg(ID) {
+    this.$http
+      .delete(this.$conf.env.detectProjectDetailImg + ID)
+      .then(res => {
+        this.isLoading = false;
+        if (res.status == "202") {
+          this.$message({ message: "删除成功", type: "success" });
+          // this.getProjectDetail()
+        }else{
+          this.$message({ message: '删除失败', type: 'warning'});
+        }
+      })
+      .catch(err => {
+        this.isLoading = false;
+        this.$message.error("网络错误");
+      });
+  },
 
     /**@图片预览 */
     handlePictureCardPreview(file) {
@@ -292,15 +331,15 @@ export default {
             if(!res.data) return
               this.actively.activelyName = res.data.name ? res.data.name : ""; //活动名称
               this.actively.activelyPriorityId = res.data.status ? '1' : '2'; //活动状态
-              this.actively.activelyNewTime = res.data.start_time ? res.data.start_time.split('T')[0] : ''; //活动开始时间
-              this.actively.activelyOldTime = res.data.end_time ? res.data.end_time.split('T')[0] : ''; //活动结束时间
+              this.actively.activelyNewTime = res.data.start_time ? res.data.start_time.split(' ')[0] : ''; //活动开始时间
+              this.actively.activelyOldTime = res.data.end_time ? res.data.end_time.split(' ')[0] : ''; //活动结束时间
               this.actively.activelyTime = [this.actively.activelyNewTime, this.actively.activelyOldTime];//活动时间
               this.actively.activelyCity = res.data.activity ? res.data.activity : ''; //活动地址
               this.actively.activelyNewPrice = res.data.shop_price ? res.data.shop_price : '' ; //活动现价
               this.actively.activelyOldPrice = res.data.old_price ? res.data.old_price : ""; //活动原价
               this.actively.activelyIntrouction = res.data.goods_desc ? res.data.goods_desc : ""; //活动介绍
               this.actively.activelyBanner = res.data.front_image ? res.data.front_image :  ''; //活动主图
-              this.activelyBannerList = res.data.front_image ? [{'url': res.data.front_image}]  : []; //活动主图
+              this.activelyBannerList = res.data.front_image ? [{'url': res.data.front_image, 'id': res.data.id}]  : []; //活动主图
               if(res.data.good_images &&res.data.good_images.length>0){
               res.data.good_images.forEach(element =>{
                 element.url = element.image
@@ -326,12 +365,12 @@ export default {
         var params = new FormData()
          this.actively.activelyProjectImg.forEach(element =>{
            if(!element.id){
-            params.append('good_images', element.image);
+            params.append('good_image', element.image);
            }
          })
         this.actively.activelyPosterImg.forEach(element =>{
           if(!element.id){
-           params.append('good_details', element.image);
+           params.append('good_detail', element.image);
           }
          })
         params.append("name", this.actively.activelyName)
@@ -366,7 +405,16 @@ export default {
           this.$message({ message: '请完善您的信息', type: 'warning'});
           return false
        }else{
-         return true
+         if (this.actively.activelyProjectImg.length < 4) {
+            this.$message({
+              message: "商品照片不得少于四张",
+              type: "warning"
+            });
+            return false
+          } else {
+            return true
+          }
+        
        }
      },
 
@@ -390,7 +438,7 @@ export default {
      UpdataActivelyTwoData(params){
        this.$http.put(this.$conf.env.setActivelyDetailTwoData + this.activelyId + '/', params).then(res =>{
              this.isLoading = false
-            if(res.status == '201'){
+            if(res.status == '200'){
                 this.$message({ message: '修改成功', type: 'success'});
                 this.reload()
             }else{
@@ -441,7 +489,8 @@ export default {
   .tijiao {
     display: block;
     width: 1.71rem;
-    height: 0.39rem;
+     height: .39rem;
+      line-height: .39rem;
     background: rgba(127, 99, 244, 1);
     border-radius: 3px;
     margin: 0 auto .5rem;
@@ -590,7 +639,7 @@ export default {
           position: relative;
           background: url("../../../assets/img/addphoto.png") no-repeat;
           background-size: cover;
-          border: 0;
+              border: 1px dashed #fff;
           i {
             /*position: absolute;*/
             /*left: 0.26rem;*/

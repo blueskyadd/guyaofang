@@ -212,6 +212,12 @@
         display: block;
       }
     }
+    ::-webkit-scrollbar {
+        display: unset !important;
+    }
+    .el-input__suffix{
+      right: 0 !important;
+    }
   }
   
 </style>

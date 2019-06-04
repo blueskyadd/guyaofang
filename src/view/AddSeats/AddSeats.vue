@@ -215,7 +215,6 @@
           background: rgba(127,99,244,1);
           border-color: #7F63F4;
           width:1.71rem;
-          height:.39rem;
           font-size: .18rem;
         }
         

@@ -19,9 +19,8 @@
                 <tr>
                   <td class="input_lable">
                     <label>分类</label>
-                    <el-select  v-model="project.projectCategoryId" placeholder="请选择">
+                    <el-select popper-class='selete_list'  v-model="project.projectCategoryId" placeholder="请选择">
                       <el-option
-                     
                         v-for="item in projectCategory"
                         :key="item.id"
                         :label="item.name"
@@ -232,8 +231,6 @@ export default {
     },
     addAttachmentDetail(params) {
       this.baseImg(params.file, false);
-      let formData = new FormData();
-      formData.append("head", params.file);
     },
     baseImg(files, flag) {
       let reader = new FileReader();
@@ -261,6 +258,7 @@ export default {
     },
     handleRemoveMain(file, fileList) {
       this.project.projectMainImg = "";
+      this.projectMainImgList = []
     },
     handleRemoveBanner(file, fileList) {
       this.project.projectBanner = fileList;
@@ -276,7 +274,6 @@ export default {
           this.isLoading = false;
           if (res.status == "202") {
             this.$message({ message: "删除成功", type: "success" });
-            // this.getProjectDetail()
           }else{
             this.$message({ message: '删除失败', type: 'warning'});
           }
@@ -287,8 +284,29 @@ export default {
         });
     },
     handleRemoveDetail(file, fileList) {
-      this.projrct.projectDetail = fileList;
+      this.project.projectDetail = fileList;
+      if (file.id) {
+        this.isLoading = true;
+        this.deleteProjectdetailImg(file.id);
+      }
     },
+     deleteProjectdetailImg(ID) {
+    this.$http
+      .delete(this.$conf.env.detectProjectDetailImg + ID)
+      .then(res => {
+        this.isLoading = false;
+        if (res.status == "202") {
+          this.$message({ message: "删除成功", type: "success" });
+          // this.getProjectDetail()
+        }else{
+          this.$message({ message: '删除失败', type: 'warning'});
+        }
+      })
+      .catch(err => {
+        this.isLoading = false;
+        this.$message.error("网络错误");
+      });
+  },
     handlePictureCardPreview(file) {
       this.dialogImageUrl = file.url;
       this.dialogVisible = true;
@@ -342,7 +360,7 @@ export default {
           }
           this.project.projectDetail = res.data.good_details ? res.data.good_details : []; //商品详情图
           this.project.projectMainImg = res.data.front_image ? res.data.front_image : [];
-          this.projectMainImgList = res.data.front_image ? [{ url: res.data.front_image }] : [];
+          this.projectMainImgList = res.data.front_image ? [{ url: res.data.front_image, id:res.data.id }] : [];
           this.project.projectCategoryId = res.data.category ? res.data.category: ""; //分类ID
           this.project.projectPriorityId = res.data.priority ? res.data.priority : ""; //优先级ID
           this.project.projectStatus = res.data.status ? "1" : "2"; //商品状态
@@ -375,7 +393,7 @@ export default {
             message: "商品照片不得少于四张",
             type: "warning"
           });
-        } else {
+        } else{
           this.submitProjectUplude();
         }
       }
@@ -386,12 +404,12 @@ export default {
       var projectDetail = [];
       this.project.projectBanner.forEach(element => {
         if (!element.id) {
-          formData.append("good_images", element.image);
+          formData.append("good_image", element.image);
         }
       });
       this.project.projectDetail.forEach(element => {
         if (!element.id) {
-          formData.append("good_details", element.image);
+          formData.append("good_detail", element.image);
         }
       });
       formData.append("category", this.project.projectCategoryId); //分类id
@@ -437,7 +455,7 @@ export default {
           true
         )
         .then(res => {
-          this.isLoading = false;
+          this.isLoading = false; 
           if (res.status == "200") {
             this.$message({ message: "修改成功", type: "success" });
             this.reload();
@@ -476,21 +494,23 @@ export default {
 };
 </script>
 
-<style lang="scss" >
- 
+<style lang="scss">
+ .selete_list{
+    margin-top: .56rem !important;
+  }
 .addShop-box {
   overflow: hidden;
-  .el-select-dropdown{
-      margin-top:.54rem !important;
-    }
+  .el-popper[x-placement^=bottom]{
+    margin-top: .56rem !important;;
+  }
   ::-webkit-scrollbar {
         display: none;
     }
-   
   .el-upload-list__item-status-label {
     margin: 0 !important;
     line-height: initial;
   }
+ 
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -499,7 +519,8 @@ export default {
   .tijiao {
     display: block;
     width: 1.71rem;
-    height: 0.39rem;
+    height: .39rem;
+    line-height: .39rem;
     background: rgba(127, 99, 244, 1);
     border-radius: 3px;
     left: 4.86rem;
@@ -654,10 +675,11 @@ export default {
                   input:checked {
                     background: #7f63f4;
                   }
-                  span {
+                  .el-radio__label {
                     float: left;
                     line-height: 0.53rem;
                     font-size: .16rem;
+                    padding-right: .1rem;
                   }
                 }
                 input {
@@ -747,7 +769,7 @@ export default {
                   position: relative;
                   background: url("../../assets/img/addphoto.png") no-repeat;
                   background-size: cover;
-                  border: 0;
+                      border: 1px dashed #fff;
                   i {
                     /*position: absolute;*/
                     /*left: 0.26rem;*/

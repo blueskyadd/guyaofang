@@ -23,12 +23,23 @@
               ></el-date-picker>
             </td>
             <td>
+              <label for="">活动开始时间</label>
+              <el-date-picker
+                v-model="actively.activelystartTime"
+                type="datetime"
+                align='left'
+                :clearable='false'
+                value-format="yyyy-MM-dd-HH-mm-ss"
+                placeholder="选择开始时间">
+              </el-date-picker>
+            </td>
+            <td>
               <label for>活动地址</label>
               <input type="text" placeholder="填写活动地址" class="actively-site" v-model="actively.activelyCity">
             </td>
             <td class="section-big">
               <label for style="display: block">放生选择</label>
-              <el-checkbox-group v-model="actively.animalinitListId" >
+              <el-checkbox-group v-model="actively.animalinitListId">
                 <el-checkbox   v-for="item in animalinitList" :key="item.id"   :label="item.id">{{item.name}}</el-checkbox>
               </el-checkbox-group>
             </td>
@@ -92,7 +103,7 @@
                   :before-upload="beforeAvatarUpload"
                   accept="image/png, image/jpeg"
                   :on-preview="handlePictureCardPreview"
-                  :on-remove="handleRemove"
+                  :on-remove="handleRemovePoster"
                   :multiple="true"
                   :file-list="actively.activelyPosterImg"
                   class="photo"
@@ -156,6 +167,8 @@ export default {
         activelyProjectImg: [], //活动商品图
         activelyPosterImg: [], //活动海报
         animalinitListId:[],//放生ID
+        activelystartTime: '',
+        activelystartTimedata:'',
       },
       isLoading: false ,
       animalinitList: [],//放生列表
@@ -204,21 +217,61 @@ export default {
       this.activelyBanner = ''
       this.activelyBannerList = []
     },
-
+    
     //删除商品你照片
     handleRemoveProject(file, fileList){
       this.actively.activelyProjectImg = fileList
+      if (file.id) {
+        this.isLoading = true;
+        this.deleteProjectImg(file.id);
+      }
     },
-
+    deleteProjectImg(ID) {
+      this.$http
+        .delete(this.$conf.env.deleteProjectImg + ID)
+        .then(res => {
+          this.isLoading = false;
+          if (res.status == "202") {
+            this.$message({ message: "删除成功", type: "success" });
+          }else{
+            this.$message({ message: '删除失败', type: 'warning'});
+          }
+        })
+        .catch(err => {
+          this.isLoading = false;
+          this.$message.error("网络错误");
+        });
+    },
     //删除海报照片
     handleRemovePoster(file, fileList){
       this.actively.activelyPosterImg = fileList
+      if (file.id) {
+        this.isLoading = true;
+        this.deleteProjectdetailImg(file.id);
+      }
     },
-
+     deleteProjectdetailImg(ID) {
+    this.$http
+      .delete(this.$conf.env.detectProjectDetailImg + ID)
+      .then(res => {
+        this.isLoading = false;
+        if (res.status == "202") {
+          this.$message({ message: "删除成功", type: "success" });
+          // this.getProjectDetail()
+        }else{
+          this.$message({ message: '删除失败', type: 'warning'});
+        }
+      })
+      .catch(err => {
+        this.isLoading = false;
+        this.$message.error("网络错误");
+      });
+  },
     /**@图片预览 */
     handlePictureCardPreview(file) {
       this.dialogImageUrl = file.url;
       this.dialogVisible = true;
+      
     },
 
      /**@图片格式判断 */
@@ -249,9 +302,11 @@ export default {
         if(res.status == '200'){
           if(res.data){
             this.actively.activelyName = res.data.name ? res.data.name: '';//活动名称
-            this.actively.activelyNewTime = res.data.start_time ? res.data.start_time.split('T')[0] : ''; //活动时间
-            this.actively.activelyOldTime = res.data.end_time ? res.data.end_time.split('T')[0] : ''; //活动时间
+            this.actively.activelyNewTime = res.data.start_time ? res.data.start_time.split(' ')[0] : ''; //活动时间
+            this.actively.activelyOldTime = res.data.end_time ? res.data.end_time.split(' ')[0] : ''; //活动时间
             this.actively.activelyTime = [this.actively.activelyNewTime, this.actively.activelyOldTime];//活动时间
+            this.actively.activelystartTimedata = res.data.activity_time ? res.data.activity_time : '',//活动正式开始挤时间
+            this.actively.activelystartTime = res.data.activity_time ? res.data.activity_time.split(' ')[0]+'-'+res.data.activity_time.split(' ')[1].split(':')[0]+'-' + res.data.activity_time.split(' ')[1].split(':')[1]+'-00' : ''
             this.actively.activelyCity = res.data.activity ? res.data.activity : ''; //活动地址
             this.actively.activelyBanner = res.data.front_image ? res.data.front_image  : ''; //活动主图
             this.activelyBannerList = res.data.front_image ? [{'url': res.data.front_image}]  : []; //活动主图
@@ -281,21 +336,24 @@ export default {
        var params = new FormData()
          this.actively.activelyProjectImg.forEach(element =>{
             if(!element.id){
-            params.append('good_images', element.image);
+            params.append('good_image', element.image);
             }
         })
         this.actively.activelyPosterImg.forEach(element =>{
            if(!element.id){
-            params.append('good_details', element.image);//商品详情图
+            params.append('good_detail', element.image);//商品详情图
            }
+        })
+        this.actively.animalinitListId.forEach(element =>{
+          params.append("animals", element)
         })
        params.append("name", this.actively.activelyName)
        params.append("start_time", this.actively.activelyNewTime  + 'T00:00')
        params.append("end_time", this.actively.activelyOldTime  + 'T00:00')
-       
+       params.append('activity_time', this.actively.activelystartTimedata)
        params.append("activity", this.actively.activelyCity)
        this.activelyBannerList.length>0 ? params.append("front_image", ''): params.append("front_image", this.actively.activelyBanner)
-       params.append("animals", this.actively.animalinitListId)
+       
        this.isLoading = true
       this.activelyId == -1 ? this.AddtoActivelyThreeData(params) : this.UpdataActivelyThreeData(params)
     },
@@ -309,6 +367,7 @@ export default {
           !this.actively.activelyTime || //活动时间
           !this.actively.activelyCity ||  //活动地址
           !this.actively.activelyBanner ||  //活动主图
+          !this.actively.activelystartTimedata ||
           this.actively.activelyProjectImg.length == 0 ||  //活动商品图
           this.actively.activelyPosterImg.length == 0 //活动海报
        ){
@@ -342,6 +401,7 @@ export default {
             this.isLoading = false
           if(res.status == '200'){
               this.$message({ message: '修改成功', type: 'success'});
+              this.reload()
           }else{
                this.$message({ message: '修改失败', type: 'warning'});
           }
@@ -359,11 +419,16 @@ export default {
       this.getActivelyDetail()
     }
   },
+  
   watch:{
     'actively.activelyTime'(newData,oldData){
       this.actively.activelyNewTime = newData[0]
       this.actively.activelyOldTime = newData[1]
-    }
+    },
+    'actively.activelystartTime'(newData, oldData){
+      if(!newData) return
+      this.actively.activelystartTimedata = newData.split('-')[0]+'-'+newData.split('-')[1]+'-'+newData.split('-')[2]+'T'+newData.split('-')[3]+':'+newData.split('-')[4]+':'+newData.split('-')[5]
+    },
   }
 };
 </script>
@@ -373,10 +438,11 @@ export default {
   .tijiao {
     display: block;
     width: 1.71rem;
-    height: 0.39rem;
     background: rgba(127, 99, 244, 1);
     border-radius: 3px;
     margin: 0 auto .5rem;
+     height: .39rem;
+      line-height: .39rem;
     margin-bottom: 1rem;
     color: #fff;
     font-size: 0.18rem;
@@ -404,9 +470,12 @@ export default {
       color: #fff;
     }
   }
+  
   table {
     width: 100%;
+    
     tr {
+      
       .inp-none {
         .el-range-editor.el-input__inner {
           width: 3.6rem;
@@ -483,7 +552,7 @@ export default {
           position: relative;
           background: url("../../../assets/img/addphoto.png") no-repeat;
           background-size: cover;
-          border: 0;
+              border: 1px dashed #fff;
           i {
             /*position: absolute;*/
             /*left: 0.26rem;*/

@@ -5,7 +5,7 @@
       <div class="header">
         <span></span>
         <p>放生名单</p>
-        <span @click="$parent.isRelease = 0">
+        <span @click="setParentData()">
           <img src="../../../assets/img/close.png" style="cursor: pointer;" alt srcset>
         </span>
       </div>
@@ -63,12 +63,6 @@ export default {
       isLoadinga: true
     };
   },
-
-  methods: {
-    close() {
-      this.flag = false;
-    }
-  },
   computed: {
     sumNumber() {
       var num = 0;
@@ -105,14 +99,18 @@ export default {
         .catch(err => {
           this.isLoadinga = false;
         });
-    }
+    },
+    setParentData(){
+      this.$parent.activelyId = -1
+      this.$parent.isRelease = 0
+    },
   },
   mounted() {
     this.getAcitvelyThreeLifeList();
   }
 };
 </script>
-<style lang="scss" scoped >
+<style lang="scss"  >
 .big-box {
   position: fixed;
   width: 200%;
@@ -187,6 +185,10 @@ export default {
             tr.el-table__row--striped td {
               border: none;
               background: rgba(244, 241, 255, 1);
+            }
+            th{
+                background: #7F63F4 !important;
+                color: #fff;
             }
             img {
               width: 0.5rem;

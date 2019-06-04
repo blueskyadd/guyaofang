@@ -291,6 +291,11 @@ export default {
     border-radius: 50% !important;
     width: 0.32rem !important;
     height: 0.32rem !important;
+    span{
+        min-width: .32rem;
+        line-height: .32rem;
+        height: .32rem;
+      }
   }
 }
 </style>

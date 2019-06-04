@@ -24,6 +24,17 @@
               </el-date-picker>
             </td>
             <td>
+              <label for="">活动开始时间</label>
+              <el-date-picker
+                v-model="actively.activelystartTime"
+                type="datetime"
+                align='left'
+                :clearable='false'
+                value-format="yyyy-MM-dd-HH-mm-ss"
+                placeholder="选择开始时间">
+              </el-date-picker>
+            </td>
+            <td>
               <label for="">活动地址</label>
               <input type="text" placeholder="填写活动地址" class="actively-site" v-model="actively.activelyCity">
             </td>
@@ -76,7 +87,7 @@
                   :before-upload="beforeAvatarUpload"
                   accept="image/png, image/jpeg"
                   :on-preview="handlePictureCardPreview"
-                  :on-remove="handleRemove"
+                  :on-remove="handleRemovePoster"
                   :multiple="true"
                   :file-list='actively.activelyPosterImg'
                   class="photo"
@@ -123,8 +134,7 @@ import ActivelyOneApp from '../activelyApp/ActivelyOneApp.vue'
             pickerOptions2: {
               shortcuts: []
             },
-            value6: '',
-            value7: '',
+            
             dialogImageUrl: '',
             dialogVisible: false,
             img_list:[],    //上传图片文件
@@ -138,6 +148,8 @@ import ActivelyOneApp from '../activelyApp/ActivelyOneApp.vue'
               activelyMainImg: '',//活动主图
               activelyOldTime: '结束时间',//活动结束时间
               activelyNewTime: '开始时间',//活动开始时间
+              activelystartTime: '',
+              activelystartTimedata:'',
             },
             isLoading: false,//加载
             activelyMainImgList:[]
@@ -178,15 +190,36 @@ import ActivelyOneApp from '../activelyApp/ActivelyOneApp.vue'
          /**@删除图片 */
 
         //删除主题照片
-        handleRemove(){
+        handleRemove(file){
           this.actively.activelyMainImg = ''
+          this.activelyMainImgList=[]
         },
 
         //删除Poster照片
         handleRemovePoster(file, fileList) {
+          console.log(fileList)
           this.actively.activelyPosterImg = fileList
+          if (file.id) {
+            this.isLoading = true;
+            this.deleteProjectImg(file.id);
+          }
         },
-
+        deleteProjectImg(ID) {
+          this.$http
+            .delete(this.$conf.env.detectProjectDetailImg + ID)
+            .then(res => {
+              this.isLoading = false;
+              if (res.status == "202") {
+                this.$message({ message: "删除成功", type: "success" });
+              }else{
+                this.$message({ message: '删除失败', type: 'warning'});
+              }
+            })
+            .catch(err => {
+              this.isLoading = false;
+              this.$message.error("网络错误");
+            });
+        },
         /**@图片格式判断 */
         beforeAvatarUpload(file){ 
           const isJPG = file.type === "image/jpeg"
@@ -213,8 +246,10 @@ import ActivelyOneApp from '../activelyApp/ActivelyOneApp.vue'
             if(res.status == '200'){
               if(!res.data) return
                 this.actively.activelyName = res.data.name ? res.data.name :'',//活动名称
-                this.actively.activelyNewTime = res.data.start_time ? res.data.start_time.split('T')[0] : ''; //活动开始时间
-                this.actively.activelyOldTime = res.data.end_time ? res.data.end_time.split('T')[0] : ''; //活动结束时间
+                this.actively.activelyNewTime = res.data.start_time ? res.data.start_time.split(' ')[0] : ''; //活动开始时间
+                this.actively.activelyOldTime = res.data.end_time ? res.data.end_time.split(' ')[0] : ''; //活动结束时间
+                this.actively.activelystartTimedata = res.data.activity_time ? res.data.activity_time : '',//活动正式开始挤时间
+                this.actively.activelystartTime = res.data.activity_time ? res.data.activity_time.split(' ')[0]+'-'+res.data.activity_time.split(' ')[1].split(':')[0]+'-' + res.data.activity_time.split(' ')[1].split(':')[1]+'-00' : ''               
                 this.actively.activelyTime = [this.actively.activelyNewTime, this.actively.activelyOldTime];//活动时间范围
                 this.actively.activelyCity = res.data.activity ? res.data.activity : '';//活动地址
                 this.actively.activelyPeopleNumber = res.data.goods_num ? res.data.goods_num : 0;//活动人数
@@ -226,7 +261,7 @@ import ActivelyOneApp from '../activelyApp/ActivelyOneApp.vue'
                 }
                 this.actively.activelyPosterImg =  res.data.good_details ? res.data.good_details : [];//活动海报
                 this.actively.activelyMainImg = res.data.front_image ? res.data.front_image : ''
-                this.activelyMainImgList = res.data.front_image ? [{'url': res.data.front_image}]  : []; //活动主图
+                this.activelyMainImgList = res.data.front_image ? [{'url': res.data.front_image, 'id': res.data.id}]  : []; //活动主图
             }
           }).catch( err =>{
             this.isLoading = false
@@ -241,13 +276,14 @@ import ActivelyOneApp from '../activelyApp/ActivelyOneApp.vue'
           var params = new FormData()
            this.actively.activelyPosterImg.forEach( element =>{
              if(!element.id){
-                params.append('good_details', element.image);
+                params.append('good_detail', element.image);
              }
            })
           this.activelyMainImgList.length>0 ? params.append('front_image', '') : params.append('front_image', this.actively.activelyMainImg)
           params.append('name', this.actively.activelyName)
-          params.append('start_time', this.actively.activelyNewTime + 'T00:00')
+          params.append('start_time', this.actively.activelyNewTime + 'T00:00') 
           params.append('end_time', this.actively.activelyOldTime + 'T00:00')
+          params.append('activity_time', this.actively.activelystartTimedata)
           params.append('activity', this.actively.activelyCity)
           params.append('goods_num', this.actively.activelyPeopleNumber)
           params.append('principal_telephone', this.actively.activelyLinkPhone)
@@ -265,6 +301,7 @@ import ActivelyOneApp from '../activelyApp/ActivelyOneApp.vue'
             !this.actively.activelyPeopleNumber ||
             !this.actively.activelyLinkPhone ||
             !this.actively.activelyMainImg ||
+            !this.actively.activelystartTimedata ||
             this.actively.activelyPosterImg.length == 0
           ) {
             this.$message({ message: '请完善您的信息', type: 'warning'});
@@ -299,7 +336,7 @@ import ActivelyOneApp from '../activelyApp/ActivelyOneApp.vue'
         UpdataActivelyOneData(params){
           this.$http.put(this.$conf.env.setActivelyDetailOneData + this.activelyId + '/', params, true).then(res =>{
              this.isLoading = false
-            if(res.status == '201'){
+            if(res.status == '200'){
                 this.$message({ message: '修改成功', type: 'success'});
                 this.reload()
             }else{
@@ -321,6 +358,9 @@ import ActivelyOneApp from '../activelyApp/ActivelyOneApp.vue'
         'actively.activelyTime'(newData,oldData){
           this.actively.activelyNewTime = newData[0]
           this.actively.activelyOldTime = newData[1]
+        },
+        'actively.activelystartTime'(newData, oldData){
+          this.actively.activelystartTimedata = newData.split('-')[0]+'-'+newData.split('-')[1]+'-'+newData.split('-')[2]+'T'+newData.split('-')[3]+':'+newData.split('-')[4]+':'+newData.split('-')[5]
         }
       }
     }
@@ -351,6 +391,7 @@ import ActivelyOneApp from '../activelyApp/ActivelyOneApp.vue'
       display: block;
       width: 1.71rem;
       height: .39rem;
+      line-height: .39rem;
       background:rgba(127,99,244,1);
       border-radius:3px;
       margin: 0 auto .5rem;
@@ -480,7 +521,7 @@ import ActivelyOneApp from '../activelyApp/ActivelyOneApp.vue'
               position: relative;
               background: url("../../../assets/img/addphoto.png") no-repeat;
               background-size: cover;
-              border:0;
+              border:1px dashed #fff;
               i{
                 /*position: absolute;*/
                 /*left: 0.26rem;*/

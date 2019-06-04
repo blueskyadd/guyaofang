@@ -537,6 +537,7 @@
         position: relative;
         .queding-but{
           width:1.71rem;
+          line-height: .39rem;
           height:.39rem;
           background:rgba(127,99,244,1);
           border-radius:3px;

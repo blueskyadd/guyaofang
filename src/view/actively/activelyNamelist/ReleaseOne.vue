@@ -5,7 +5,7 @@
             <div class="header">
                 <span></span>
                 <p>参与名单</p>
-                <span @click="$parent.isRelease = 0"><img style="cursor: pointer;" src="../../../assets/img/close.png" alt="" srcset=""></span>
+                <span @click="setParentData()"><img style="cursor: pointer;" src="../../../assets/img/close.png" alt="" srcset=""></span>
             </div>
             <el-main>
                 <el-table
@@ -50,6 +50,10 @@ export default {
       close(){
           this.flag = false
       },
+        setParentData(){
+        this.$parent.activelyId = -1
+        this.$parent.isRelease = 0
+        },
       getActivelyOneUserList(){
           this.$http.get(this.$conf.env.getActivelyOneUserList +this.activelyId ).then( res =>{
               this.isLoading = false

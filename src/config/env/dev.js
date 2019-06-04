@@ -75,5 +75,9 @@ module.exports = {
     SendListTea: winchaingroupApi + '/good/teagoods/',   //提交今日茶单
 
     OrderListToady: winchaingroupApi + '/order/teaorder/',   //提交今日茶单
+
+    XIList:winchaingroupApi+'/good/seatupdate/',    //获取全部席位
+
+    ChangeXiStatus : winchaingroupApi + '/good/seatupdate/'   //改变席位状态    
     
 }

@@ -5,7 +5,7 @@
             <div class="header">
                 <span></span>
                 <p>付款名单</p>
-                <span @click="$parent.isRelease = 0"><img src="../../../assets/img/close.png" style="cursor: pointer;" alt="" srcset=""></span>
+                <span @click="setParentData()"><img src="../../../assets/img/close.png" style="cursor: pointer;" alt="" srcset=""></span>
             </div>
             <el-main>
                 <el-table
@@ -55,6 +55,10 @@ export default {
     methods: {
       close(){
           this.flag = false
+      },
+      setParentData(){
+      this.$parent.activelyId = -1
+      this.$parent.isRelease = 0
       },
       getActivelyTwoJoinList(){
           this.$http.get(this.$conf.env.getActivelyTwoJoinList +this.activelyId ).then( res =>{

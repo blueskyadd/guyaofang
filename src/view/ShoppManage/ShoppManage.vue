@@ -346,13 +346,22 @@ export default {
       border-radius: 50% !important;
       width: 0.32rem !important;
       height: 0.32rem !important;
+      min-width: .32rem!important;
+      min-height: .32rem;
+      span{
+        min-width: .32rem;
+        line-height: .32rem;
+        height: .32rem;
+      }
     }
+    
   }
+  ::-webkit-scrollbar {
+        display: none;
+    }
 }
 .el-button--text{
   color: #333 !important;
 }
-::-webkit-scrollbar {
-        display: none;
-    }
+
 </style>

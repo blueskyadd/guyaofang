@@ -3,7 +3,7 @@
     <headerTitle/>
     <el-main v-if="isAddActively">
       <div class="view-box">
-        <div class="table-box">
+        <div class="table-box" style="padding-bottom: 2rem;">
           <div class="manage-tit">
             <img src="../../assets/img/add.png" alt=""  @click="isAddActively = false">
           </div>
@@ -203,9 +203,16 @@ import headerTitle from './../../components/header/header'
     }
     .btn-prev, .btn-next{
       background: #fff !important;
-       border-radius: 50% !important;
-       width: .32rem !important;
-        height: .32rem !important;
+      border-radius: 50% !important;
+      width: .32rem !important;
+      height: .32rem !important;
+      min-width: .32rem!important;
+      min-height: .32rem;
+      span{
+        min-width: .32rem;
+        line-height: .32rem;
+        height: .32rem;
+      }
     }
 
 
@@ -286,7 +293,6 @@ import headerTitle from './../../components/header/header'
         width: 100%;
         height:auto;
         position: relative;
-        padding-bottom: 2rem;
         min-height: 7.2rem;
         .manage-tit{
           width: 100%;
@@ -309,6 +315,7 @@ import headerTitle from './../../components/header/header'
             tr{
               th{
                 background: #F2F5F8 !important;
+                
               }
             }
           }
@@ -317,6 +324,9 @@ import headerTitle from './../../components/header/header'
     }
     .el-button{
       padding: .12rem 0 !important;
+    }
+     ::-webkit-scrollbar {
+        display: none;
     }
   }
 </style>

@@ -166,6 +166,7 @@ export default {
                 display: flex;
                 img{
                     width: .3rem !important;
+                    height: auto !important;
                     margin: .2rem auto 0;
                 }
                 i{

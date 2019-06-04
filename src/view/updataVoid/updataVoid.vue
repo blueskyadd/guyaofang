@@ -251,7 +251,6 @@ export default {
         background: rgba(127, 99, 244, 1);
         border-color: #7f63f4;
         width: 1.71rem;
-        height: 0.39rem;
         font-size: 0.18rem;
       }
 
@@ -347,7 +346,7 @@ export default {
                   position: relative;
                   background: url("../../assets/img/addphoto.png") no-repeat;
                   background-size: cover;
-                  border: 0;
+                  border: 1px dashed #fff;
                   i {
                     /*position: absolute;*/
                     /*left: 0.26rem;*/

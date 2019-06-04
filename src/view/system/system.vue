@@ -412,17 +412,19 @@ import headerTitle from "../../components/header/header"
             margin: 0 !important;
             line-height: initial;
     }
-
+    ::-webkit-scrollbar {
+        display: none;
+    }
     /*头部*/
     .view-box{
       width: 100%;
-      height:100%;
+      min-height: 100%;
       background: #fff;
       box-shadow:0px 3px 10px 0px rgba(119,119,119,0.1);
       border-radius:3px;
       .addshopp-box{
+        min-height: 100%;
         width: 100%;
-        height:100%;
         padding:.28rem;
         box-sizing: border-box;
         overflow-x: hidden;
@@ -435,7 +437,6 @@ import headerTitle from "../../components/header/header"
           background: rgba(127,99,244,1);
           border-color: #7F63F4;
           width:1.71rem;
-          height:.39rem;
           font-size: .18rem;
         }
 
@@ -613,6 +614,7 @@ import headerTitle from "../../components/header/header"
           margin-left: .15rem;
         }
       }
+       
     }
 
     /*表单*/

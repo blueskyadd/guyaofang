@@ -159,9 +159,16 @@ import headerTitle from "../../components/header/header"
     }
     .btn-prev, .btn-next{
       background: #fff !important;
-       border-radius: 50% !important;
-       width: .32rem !important;
-        height: .32rem !important;
+      border-radius: 50% !important;
+      width: .32rem !important;
+      height: .32rem !important;
+      min-width: .32rem!important;
+      min-height: .32rem;
+      span{
+        min-width: .32rem;
+        line-height: .32rem;
+        height: .32rem;
+      }
     }
     header{
       width: 100%;

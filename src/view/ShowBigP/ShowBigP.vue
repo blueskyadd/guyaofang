@@ -51,6 +51,8 @@
             timer:null,
             b:0,
 
+            dan:[],
+
 
 
 
@@ -205,10 +207,89 @@
             // }else{
             //
             // }
+          this.removeDom()
+          },
 
+        initWebSocket() {
+          const wsuri = `ws://10.102.100.23:8001/ws/screen/jfakdnmvjkdhlqwiopkfjkvncvzjkldfmnjksjuriqhdjkxnwll/`;
+          this.websock = new WebSocket(wsuri);//这里面的this都指向vue
+          this.websock.onopen = this.websocketopen;
+          this.websock.onmessage = this.websocketonmessage;
+          this.websock.onclose = this.websocketclose;
+          this.websock.onerror = this.websocketerror;
+        },
+        websocketopen() {//打开
+          console.log("WebSocket连接成功")
+        },
+        websocketonmessage(e) { //数据接收
+          let ObjData = JSON.parse(e.data);
+          console.log(ObjData)
+          if(ObjData.info.id != "" || ObjData.info.id != undefined){
+            this.dan.push(ObjData.info)
           }
+        },
+        websocketclose() {  //关闭
+          console.log("WebSocket关闭");
 
-      }
+        },
+
+        websocketerror() {  //失败
+           console.log("WebSocket连接失败");
+        },
+        removeDom(){
+            // setTimeout(()=>{
+
+            //   $(".dan")[0].remove()
+            // },10000)
+            let arr = []
+            arr.push(document.getElementsByClassName("dan"))
+          arr.forEach((element, index) =>{
+            console.log(element)
+            console.log(element[0].style.left)
+            if(element[0].style.left == '-530px'){
+                element[0].remove()
+            }
+            
+
+          })
+        },
+        bb(){
+            setInterval(()=>{
+              if(this.dan.length>0){
+                let DOM =(`<div class="dan">
+          <header>
+            <img src="" alt="">
+          </header>
+          <div class="words">
+            <div class="zhuozi">${this.dan[0].name}</div>
+            <div class="tea_WOrd">${this.dan[0].content}</div>
+          </div>
+        </div>`)
+
+                // let WidthD = $(".dan").width()
+                // DOM.css({
+                //   right:'-`${WidthD}`px'
+                // })
+                $(".BigBg").append(DOM)
+
+                $(".dan").animate(
+                  {
+                    left:'-530px'
+
+                  },6000);
+                this.dan.splice(0,1)
+              }
+            },1200)
+        }
+      },
+      created() {
+          this.initWebSocket()
+        this.bb()
+      },
+      destroyed() {
+        this.websock.close() //离开路由之后断开websocket连接
+      },
+
     }
 </script>
 
@@ -319,7 +400,7 @@
       .dan{
         width: 530px;
         height: 68px;
-        background: red;
+        background: black;
         position: absolute;
         right: -530px;
         top: 30px;
@@ -330,13 +411,11 @@
           width:68px;
           height:68px;
           border-radius:50%;
-          background: black;
           float: left;
         }
         .words{
           height: 100%;
           width: 400px;
-          background: yellow;
           margin-left: 100px;
           overflow: hidden;
           .zhuozi{
@@ -349,7 +428,6 @@
           .tea_WOrd{
             width: 250px;
             font-size:28px;
-            background: purple;
             margin-left: 44px;
             overflow: hidden;
             float: left;
