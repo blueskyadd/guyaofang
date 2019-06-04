@@ -36,7 +36,7 @@
           <el-pagination
           background
           layout="prev, pager, next"
-          :page-size= 10
+          :page-size= 'perPage'
           :total="seatNumber"
           prev-text="<<"
           next-text=">>"
@@ -70,6 +70,7 @@ export default {
       seatsID: -1,
       seatNumber: 0, //茶坊列表总条数
       isLoading: true,
+      perPage: 10,
       currentPage: 1, //当前页面
       orderaddress: ""
     };
@@ -139,7 +140,7 @@ export default {
         this.getOrderList(pageNumber);
       }
       this.currentPage = pageNumber;
-    }
+    },
   },
   mounted() {
     this.getOrderList();

@@ -78,6 +78,8 @@ module.exports = {
 
     XIList:winchaingroupApi+'/good/seatupdate/',    //获取全部席位
 
-    ChangeXiStatus : winchaingroupApi + '/good/seatupdate/'   //改变席位状态    
+    ChangeXiStatus : winchaingroupApi + '/good/seatupdate/',  //改变席位状态    
+
+    getVideoList :winchaingroupApi +  '/user/video/',   //获取大屏视频
     
 }

@@ -26,8 +26,9 @@
                         list-type="picture-card"
                         :http-request="addAttachment"
                         :on-preview="handlePictureCardPreview"
-                        :on-remove="handleRemove"
                         :multiple="true"
+                        accept="video/*"
+                        :before-upload="beforeUploadVideo"
                         class="photo"
                       >
                         <i class="el-icon-plus"></i>
@@ -96,6 +97,17 @@ export default {
     handlePictureCardPreview(file) {
       this.dialogImageUrl = file.url;
       this.dialogVisible = true;
+    },
+    beforeUploadVideo(file) {
+      const isLt10M = file.size / 1024 / 1024  < 30;
+      if (['video/mp4', 'video/ogg', 'video/flv','video/avi','video/rmvb'].indexOf(file.type) == -1) {
+          this.$message.error('请上传正确的视频格式');
+          return false;
+      }
+      if (!isLt10M) {
+          this.$message.error('上传视频大小不能超过30MB哦!');
+          return false;
+      }
     },
     setSystemVideo() {
       this.isLoading = true

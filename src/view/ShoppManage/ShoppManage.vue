@@ -17,7 +17,7 @@
               @cell-mouse-leave="leave"
               style="width: 100%"
             >
-              <el-table-column prop="id" label="序号"></el-table-column>
+              <el-table-column prop="id" type="index" :index="getIndex" label="序号"></el-table-column>
               <el-table-column prop="name" label="商品名称"></el-table-column>
               <el-table-column prop="shop_price" label="价格"></el-table-column>
               <el-table-column prop="create_time" label="添加时间"></el-table-column>
@@ -54,7 +54,7 @@
           <el-pagination
           background
           layout="prev, pager, next"
-          :page-size= 10
+          :page-size= 'perPage'
           :total="projectNumber"
           prev-text="<<"
           next-text=">>"
@@ -105,7 +105,8 @@ export default {
       nextPage: "", //下一页
       currentPage: 1, //当前页面
       Pagenumber: 0,
-      ClassifityID: -1
+      ClassifityID: -1,
+      perPage:10
     };
   },
   methods: {
@@ -200,12 +201,16 @@ export default {
     },
     changePage(pageNumber) {
       this.isLoading = true;
+      
       if (pageNumber > this.currentPage) {
         this.getProjectList(pageNumber);
       } else {
         this.getProjectList(pageNumber);
       }
       this.currentPage = pageNumber;
+    },
+    getIndex(index){
+      return (this.currentPage - 1) * this.perPage + index + 1
     }
   },
   mounted() {

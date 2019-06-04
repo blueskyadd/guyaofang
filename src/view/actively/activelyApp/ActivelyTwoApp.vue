@@ -27,7 +27,7 @@
     </div>
     <div class="active_footer">
         <div><span><img src="../../../assets/img/shopping.png"/> <i>商城</i></span><span><img src='../../../assets/img/shoppCart.png'/><i>购物车</i></span></div>
-        <div><span>加入购物车</span><span>立即预定</span></div>
+        <div><span>加入购物车</span><span>立即购买</span></div>
     </div>
   </div>
 </template>

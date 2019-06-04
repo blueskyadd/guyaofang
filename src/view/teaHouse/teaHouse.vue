@@ -17,7 +17,7 @@
               @cell-mouse-leave="leave"
               style="width: 100%"
             >
-              <el-table-column prop="id" label="序号"></el-table-column>
+              <el-table-column prop="id" type="index" :index="getIndex" label="序号"></el-table-column>
               <el-table-column prop="name" label="席位"></el-table-column>
               <el-table-column prop="location" label="所属分类"></el-table-column>
               <el-table-column label="二维码">
@@ -54,7 +54,7 @@
         <el-pagination
           background
           layout="prev, pager, next"
-          :page-size= 10
+          :page-size= 'perPage'
           :total="seatNumber"
           prev-text="<<"
           next-text=">>"
@@ -83,6 +83,7 @@ export default {
       seatsID: -1,
       seatNumber: 0, //茶坊列表总条数
       isLoading: true,
+      perPage: 10,
       currentPage: 1
     };
   },
@@ -117,7 +118,7 @@ export default {
         });
     },
     open(row) {
-      this.qrCodeImg = row.image;
+      this.qrCodeImg = row.qrcode;
       this.flag = true;
     },
     show(row) {
@@ -152,7 +153,10 @@ export default {
       this.isLoading = true;
       this.currentPage = numpage;
       this.getSeatList(numpage);
-    }
+    },
+     getIndex(index){
+        return (this.currentPage - 1) * this.perPage + index + 1
+      }
   },
   mounted() {
     this.getSeatList(1);
