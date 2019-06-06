@@ -27,7 +27,9 @@
                         :http-request="addAttachment"
                         :on-preview="handlePictureCardPreview"
                         :on-remove="handleRemove"
+                        :before-upload="beforeAvatarUpload"
                         :multiple="true"
+                        accept="video/*"
                         class="photo"
                       >
                         <i class="el-icon-plus"></i>
@@ -154,6 +156,17 @@ export default {
           this.$message.error("网络错误");
         });
     },
+    beforeAvatarUpload(file){
+          const isLt10M = file.size / 1024 / 1024  < 30;
+          if (['video/mp4', 'video/ogg', 'video/flv','video/avi','video/wmv','video/rmvb'].indexOf(file.type) == -1) {
+              this.$message.error('请上传正确的视频格式');
+              return false;
+          }
+          if (!isLt10M) {
+              this.$message.error('上传视频大小不能超过30MB哦!');
+              return false;
+          }
+    },  
     onExceed() {
       this.$message.error("一次只能添加一张");
     }
@@ -194,7 +207,7 @@ export default {
       overflow: hidden;
       height: 100%;
       overflow-y: scroll;
-      padding-right: .23rem;
+      padding-right: .1rem;
       li {
         width: 100% !important;
         height: 0.3rem !important;

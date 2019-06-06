@@ -17,7 +17,7 @@
               @cell-mouse-leave="leave"
               style="width: 100%"
             >
-              <el-table-column prop="id" type="index" :index="getIndex" label="序号"></el-table-column>
+              <el-table-column prop="id" type="index" :index="getIndex" label="序号" width="100%"></el-table-column>
               <el-table-column prop="name" label="席位"></el-table-column>
               <el-table-column prop="location" label="所属分类"></el-table-column>
               <el-table-column label="二维码">
@@ -118,7 +118,7 @@ export default {
         });
     },
     open(row) {
-      this.qrCodeImg = row.image;
+      this.qrCodeImg = row.qrcode;
       this.flag = true;
     },
     show(row) {

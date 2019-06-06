@@ -17,7 +17,7 @@
               @cell-mouse-leave="leave"
               style="width: 100%"
             >
-              <el-table-column prop="id" type="index" :index="getIndex" label="序号"></el-table-column>
+              <el-table-column prop="id" type="index" :index="getIndex" label="序号" width="100%"></el-table-column>
               <el-table-column prop="name" label="商品名称"></el-table-column>
               <el-table-column prop="shop_price" label="价格"></el-table-column>
               <el-table-column prop="create_time" label="添加时间"></el-table-column>

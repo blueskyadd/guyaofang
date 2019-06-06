@@ -228,7 +228,7 @@ export default {
       ], //优先级列表
       projectStatusData: [{ id: "1", name: "现货" }, { id: "2", name: "期货" }], //商品状态数据
       file: "",
-      projectStock: Number,
+      projectStock: '',
       projectMainImgList: []
     };
   },
@@ -372,7 +372,7 @@ export default {
           this.project.projectMainImg = res.data.front_image ? res.data.front_image : [];
           this.projectMainImgList = res.data.front_image ? [{ url: res.data.front_image, id:res.data.id }] : [];
           this.project.projectCategoryId = res.data.category ? res.data.category: ""; //分类ID
-          this.project.projectStock = res.data.goods_num ? res.data.goods_num : 0
+          this.project.projectStock = res.data.goods_num ? res.data.goods_num : ''
           this.project.projectPriorityId = res.data.priority ? res.data.priority : ""; //优先级ID
           this.project.projectStatus = res.data.status ? "1" : "2"; //商品状态
         })

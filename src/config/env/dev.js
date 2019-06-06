@@ -1,5 +1,7 @@
 // 开发环境配置
-const winchaingroupApi = "http://10.102.100.23:8001";
+// const winchaingroupApi = "https://www.bmeauto.cn/";
+const winchaingroupApi = "https://10.102.100.23:8001";
+
 
 module.exports = {
 //API
@@ -78,6 +80,7 @@ module.exports = {
 
     XIList:winchaingroupApi+'/good/seatupdate/',    //获取全部席位
 
-    ChangeXiStatus : winchaingroupApi + '/good/seatupdate/'   //改变席位状态    
+    ChangeXiStatus : winchaingroupApi + '/good/seatupdate/',  //改变席位状态    
     
+getVideoList :winchaingroupApi +  '/user/video/',   //获取大屏视频
 }

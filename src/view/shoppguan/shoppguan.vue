@@ -508,6 +508,7 @@
         border:1px solid rgba(127,99,244,1);
         border-radius:5px;
         background: #fff;
+        border:1px dashed #fff;
         i{
           font-size: .12rem;
           display: block;

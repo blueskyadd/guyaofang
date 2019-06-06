@@ -313,7 +313,7 @@
                     position: relative;
                     background: url("../../assets/img/addphoto.png") no-repeat;
                     background-size: cover;
-                    border:0;
+                    border:1px dashed #fff;
                     i{
                       /*position: absolute;*/
                       /*left: 0.26rem;*/

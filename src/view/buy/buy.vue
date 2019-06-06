@@ -18,6 +18,7 @@
               <el-table-column
                 prop="id"
                 type="index"
+                width="100%"
                 :index="getIndex"
                 label="序号">
               </el-table-column>

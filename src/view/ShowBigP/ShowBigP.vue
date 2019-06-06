@@ -4,6 +4,7 @@
 <!--        视频背景-->
         <div class="Void_Box">
 <!--          <video src="../../assets/img/haimian.mp4" autoplay="autoplay" loop="loop" muted="muted"></video>-->
+          <video id="vopods" src="" style="width: 100%;height:100%;object-fit:fill" controls="controls" muted="muted" autoplay="autoplay"></video>
         </div>
         <div class="order_Box">
           <div class="Order_tit">订单</div>
@@ -58,7 +59,9 @@
 
             guanOne:0,
             guanTwo:0,
-            guanThree:0
+            guanThree:0,
+            videoList:[],
+            num:0
           }
       },
       methods:{
@@ -79,7 +82,6 @@
             //   right:'-`${WidthD}`px'
             // })
             $(".BigBg").append(DOM)
-
 
 
 
@@ -250,7 +252,7 @@
             if(element[0].style.left == '-530px'){
                 element[0].remove()
             }
-            
+
 
           })
         },
@@ -281,6 +283,31 @@
                 this.dan.splice(0,1)
               }
             },1200)
+
+
+
+
+
+          this.$http
+            .get(this.$conf.env.getSystemVideo)
+            .then(res => {
+              console.log(res.data)
+              this.videoList = res.data
+                $("#vopods").attr("src",this.videoList[0].video)
+                //
+                document.getElementById("vopods").addEventListener('ended',() =>{
+                  this.num++;
+                  if(this.num>=this.videoList){
+                    this.num = 0;
+                  }
+                  $("#vopods").attr("src",this.videoList[this.num].video)
+                });
+
+            })
+            .catch(err => {
+              this.isLoading = false;
+              this.$message.error("网络错误");
+            });
         }
       },
       created() {

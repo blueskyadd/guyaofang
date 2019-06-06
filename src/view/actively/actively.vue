@@ -16,7 +16,7 @@
               @cell-mouse-leave="leave"
               style="width: 100%"
             >
-              <el-table-column prop="id" type="index" :index="getIndex" label="序号"></el-table-column>
+              <el-table-column prop="id" type="index" :index="getIndex" label="序号" width="100%"></el-table-column>
               <el-table-column prop="name" label="活动名称"></el-table-column>
               <el-table-column prop="create_time" label="添加时间"></el-table-column>
               <el-table-column prop="join_num" label="参加人数"></el-table-column>
