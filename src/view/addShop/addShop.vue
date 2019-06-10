@@ -405,7 +405,17 @@ export default {
             message: "商品照片不得少于四张",
             type: "warning"
           });
-        } else{
+        } else if(this.project.oldProjectPrice <0.01 || this.project.oldProjectPrice == 0.01 || this.project.newProjectPrice < 0.01 || this.project.newProjectPrice == 0.01){
+           this.$message({
+            message: "价格不得低于0.02",
+            type: "warning"
+          });
+        }else if(this.project.oldProjectPrice.toString().split(".")[1] && this.project.oldProjectPrice.toString().split(".")[1].length>2 || this.project.newProjectPrice.toString().split(".")[1] && this.project.newProjectPrice.toString().split(".")[1].length>2){
+           this.$message({
+            message: "请确保总计不超过 2 个小数位",
+            type: "warning"
+          });
+        }else{
           this.submitProjectUplude();
         }
       }

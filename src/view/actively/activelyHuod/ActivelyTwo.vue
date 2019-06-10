@@ -411,7 +411,17 @@ export default {
               type: "warning"
             });
             return false
-          } else {
+          } else if(this.actively.activelyOldPrice <0.01 || this.actively.activelyOldPrice == 0.01 || this.actively.activelyNewPrice < 0.01 || this.actively.activelyNewPrice == 0.01){
+           this.$message({
+            message: "价格不得低于0.02",
+              type: "warning"
+            });
+          }else if(this.actively.activelyOldPrice.toString().split(".")[1] && this.actively.activelyOldPrice.toString().split(".")[1].length>2 || this.actively.activelyNewPrice.toString().split(".")[1] && this.actively.activelyNewPrice.toString().split(".")[1].length>2){
+            this.$message({
+              message: "请确保总计不超过 2 个小数位",
+              type: "warning"
+            });
+          }else{
             return true
           }
         
