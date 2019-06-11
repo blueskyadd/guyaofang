@@ -175,6 +175,8 @@ export default {
               });
               this.tableData = res.data.results;
             }
+          }else{
+            this.tableData = []
           }
         })
         .catch(err => {

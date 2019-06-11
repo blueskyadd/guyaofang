@@ -124,6 +124,8 @@ export default {
               element.create_time = element.create_time.split(" ")[0];
             });
             this.tableData = res.data.results;
+          }else{
+            this.tableData = []
           }
         })
         .catch(err => {

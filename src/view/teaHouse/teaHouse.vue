@@ -142,6 +142,8 @@ export default {
               element.flag = false;
             });
             this.tableData = res.data.results;
+          }else{
+            this.tableData = []
           }
         })
         .catch(err => {

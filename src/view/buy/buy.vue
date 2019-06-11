@@ -120,6 +120,8 @@ import headerTitle from "../../components/header/header"
             })
             this.tableData = res.data.results
             
+          }else{
+            this.tableData = []
           }
         }).catch( err =>{
           this.isLoading = false

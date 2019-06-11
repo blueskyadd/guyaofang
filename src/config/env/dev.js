@@ -1,6 +1,6 @@
 // 开发环境配置
-// const winchaingroupApi = "https://www.bmeauto.cn/";
-const winchaingroupApi = "https://10.102.100.23:8001";
+const winchaingroupApi = "https://www.bmeauto.cn/";
+// const winchaingroupApi = "https://10.102.100.23:8001";
 
 
 module.exports = {
