@@ -1,39 +1,3 @@
-{/* <template>
-    <div>
-        <el-button :plain="true" @click="open2">成功</el-button>
-        <el-button :plain="true" @click="open3">警告</el-button>
-        <el-button :plain="true" @click="open">消息</el-button>
-        <el-button :plain="true" @click="open4">错误</el-button>  
-    </div>
-</template>
-<script>
-export default {
-     methods: {
-      //Message 消息提示
-      news(data) {
-        this.$message(data);
-      },
-      successNews(data) {
-        this.$message({
-          message: data,
-          type: 'success'
-        });
-      },
-      warningNews(data) {
-        this.$message({
-          message: data,
-          type: 'warning'
-        });
-      },
-      errNews(data) {
-        this.$message.error(data);
-      }
-    }
-}
-</script>
-<style lang="scss" scoped>
-
-</style> */}
 import Vue from 'vue'
 import { ToastPlugin } from 'vux';
 Vue.use(ToastPlugin)

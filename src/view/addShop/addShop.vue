@@ -19,7 +19,7 @@
                 <tr>
                   <td class="input_lable">
                     <label>分类</label>
-                    <el-select popper-class='selete_list'  v-model="project.projectCategoryId" placeholder="请选择">
+                    <el-select popper-class='selete_list' @click.native="getprojectCategory()"  v-model="project.projectCategoryId" placeholder="请选择">
                       <el-option
                         v-for="item in projectCategory"
                         :key="item.id"
