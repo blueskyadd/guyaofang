@@ -129,11 +129,6 @@ export default {
             <div class="tea_WOrd">${this.dan[0].content}</div>
           </div>
         </div>`;
-
-          // let WidthD = $(".dan").width()
-          // DOM.css({
-          //   right:'-`${WidthD}`px'
-          // })
           $(".BigBg").append(DOM);
 
           $(".dan").animate(

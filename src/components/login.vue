@@ -35,8 +35,8 @@
       name: "Login",
       data(){
         return{
-          "username": 'hllyzms',//账户名
-          "password": 'asd123456',//用户密码
+          "username": '',//账户名
+          "password": '',//用户密码
 
           options: [{
             value: '0',
