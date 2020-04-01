@@ -23,7 +23,7 @@
                 >
               </el-date-picker>
             </td>
-            <td>
+            <td class="startTime">
               <label for="">活动开始时间</label>
               <el-date-picker
                 v-model="actively.activelystartTime"
@@ -73,7 +73,7 @@
                 <el-dialog :visible.sync="dialogVisible" >
                   <img width="100%" :src="dialogImageUrl" alt="">
                 </el-dialog>
-                <p>750*370 png. jpg格式</p>
+                <p>375*185 png. jpg格式</p>
               </div>
             </td>
             <td class="zhuti-photo" style="height: auto;">
@@ -97,7 +97,7 @@
                 <el-dialog :visible.sync="dialogVisible">
                   <img width="100%" :src="dialogImageUrl" alt="">
                 </el-dialog>
-                <p>750*370 png. jpg格式</p>
+                <p>宽375 png. jpg格式</p>
               </div>
             </td>
             <button class="tijiao" @click="submit">确定</button>
@@ -497,8 +497,13 @@ import ActivelyOneApp from '../activelyApp/ActivelyOneApp.vue'
             .actively-site{
               width: 3.12rem;
             }
+           
           }
-
+          .startTime{
+              input{
+                text-indent: 0;
+              }
+            }
           /*上传图片样式修改*/
           .zhuti-photo{
             margin-top: .3rem;

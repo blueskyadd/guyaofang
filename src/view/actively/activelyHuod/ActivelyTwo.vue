@@ -86,6 +86,8 @@
                    accept="image/png, image/jpeg"
                   :on-remove="handleRemove"
                   :multiple="true"
+                  :limit = 1
+                  :on-exceed = 'onExceed'
                   :file-list='activelyBannerList'
                   class="photo"
                 >
@@ -94,7 +96,7 @@
                 <el-dialog :visible.sync="dialogVisible">
                   <img width="100%" :src="dialogImageUrl" alt>
                 </el-dialog>
-                <p>750*370 png. jpg格式</p>
+                <p>375*185 png. jpg格式</p>
               </div>
             </td>
             <td class="zhuti-photo" style="height: auto;margin-top:.5rem;">
@@ -120,7 +122,7 @@
                   <img width="100%" :src="dialogImageUrl" alt>
                 </el-dialog>
                
-                <p class="imgNotes">750*370 png. jpg格式</p>
+                <p class="imgNotes">375*375 png. jpg格式</p>
               </div>
             </td>
             <td class="zhuti-photo" style="height: auto;">
@@ -144,7 +146,7 @@
                 <el-dialog :visible.sync="dialogVisible">
                   <img width="100%" :src="dialogImageUrl" alt>
                 </el-dialog>
-                <p>750*370 png. jpg格式</p>
+                <p>宽375 png. jpg格式</p>
               </div>
             </td>
           </tr>
@@ -310,6 +312,11 @@ export default {
     handlePictureCardPreview(file) {
       this.dialogImageUrl = file.url;
       this.dialogVisible = true;
+    },
+
+    /**@文件超出个数限制 */
+    onExceed(){
+        this.$message.error('最多添加一张图片');
     },
 
     /**@图片格式判断 */

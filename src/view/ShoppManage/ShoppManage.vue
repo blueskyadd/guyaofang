@@ -316,7 +316,7 @@ export default {
           float: right;
           margin-bottom: 0.4rem;
           width: 0.94rem;
-          height: 0.33rem;
+          height: 0.4rem;
            cursor: pointer;
         }
       }

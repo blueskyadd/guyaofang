@@ -151,14 +151,15 @@ export default {
             float: left;
           }
         }
-::-webkit-scrollbar {
-    display: none;
-}
+
 .el-upload-list__item-status-label{
       margin: 0 !important;
       line-height: initial;
     }
 }
+.activelyOne-box::-webkit-scrollbar {
+            display: none;
+        }
 
 </style>
 

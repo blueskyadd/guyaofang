@@ -7,7 +7,7 @@
             <div class="addshopp-tit">
               <p>
                 <img src="../../assets/img/goback.png" alt @click="$parent.editBuy = true,$parent.behalfID = -1">
-                <span>添加代购</span>
+                <span>{{behalfID == -1 ?'添加代购':'编辑代购'}}</span>
               </p>
             </div>
             <table>
@@ -50,7 +50,7 @@
                       <el-dialog :visible.sync="dialogVisible">
                         <img width="100%" :src="dialogImageUrl" alt>
                       </el-dialog>
-                      <p>750*370 png. jpg格式</p>
+                      <p>50*50 png. jpg格式</p>
                     </div>
                   </td>
                 </tr>
@@ -222,7 +222,7 @@ export default {
   /*头部*/
   .view-box {
     width: 100%;
-    height: 100%;
+    height: calc(100% - .78rem);
     background: #fff;
     box-shadow: 0px 3px 10px 0px rgba(119, 119, 119, 0.1);
     border-radius: 3px;

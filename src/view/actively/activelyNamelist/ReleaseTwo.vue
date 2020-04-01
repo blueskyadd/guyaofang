@@ -1,5 +1,5 @@
 <template>
-    <div class="big-box" v-show="flag">
+    <div class="big-box-two" v-show="flag">
         <div class="box"></div>
         <div class="model">
             <div class="header">
@@ -82,7 +82,7 @@ export default {
 }
 </script>
 <style lang="scss" >
-    .big-box{
+    .big-box-two{
         position: fixed;
         width: 200%;
         height: 100%;

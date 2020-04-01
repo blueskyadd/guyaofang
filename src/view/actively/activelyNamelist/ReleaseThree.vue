@@ -21,13 +21,14 @@
                     <span>{{scope.row.name}}</span>
                   </template>
                 </el-table-column>
-                <el-table-column prop="one" align="center" width="100px" :label='oneName'></el-table-column>
-                <el-table-column align="center" width="100px" prop="two" :label='twoName'></el-table-column>
-                <el-table-column prop="three" align="center" width="100px" :label='threeName'></el-table-column>
+                <el-table-column prop="one" align="center"  :label='item' v-for="(item,index) in listName" :key="item">
+                  <template slot-scope="scope">
+                    {{scope.row.user[index+2]}}
+                  </template>
+                </el-table-column>
                 <el-table-column></el-table-column>
               </el-table>
             </div>
-
             <!-- 底部 -->
             <div class="total">
               <span>合计</span>
@@ -57,9 +58,10 @@ export default {
       oneName: '',
       twoName: '',
       threeName: '',
-      title: [{ name: "" }, { name: "" }, { name: "" }],
+      title: [],
       tableData: [],
       totaldata: [],
+      listName:[],
       isLoadinga: true
     };
   },
@@ -78,22 +80,18 @@ export default {
         .get(this.$conf.env.getAcitvelyThreeLifeList + this.activelyId)
         .then(res => {
           this.isLoadinga = false;
-
-            this.oneName = res.data.title[0] ? res.data.title[0][1] : ''
-            this.twoName = res.data.title[1]? res.data.title[1][1] : ''
-            this.threeName = res.data.title[2] ? res.data.title[2][1] : ''
+            res.data.title.forEach(value =>{
+              this.listName.push(value[1])
+            })
           var userObj = {};
           res.data.user.forEach((element, index) => {
             userObj = {
               img: element[0] ? element[0] : "",
               name: element[1] ? element[1] : "",
-              one: element[2] ? element[2] : 0,
-              two: element[3] ? element[3] : 0,
-              three: element[4] ? element[4] : 0,
+              user:  res.data.user[index]
             };
             this.tableData.push(userObj);
           });
-
           this.totaldata = res.data.total ? res.data.total : [];
         })
         .catch(err => {
@@ -174,7 +172,7 @@ export default {
               float: right;
               // margin-bottom: .4rem;
               width: 0.94rem;
-              height: 0.33rem;
+              height: 0.4rem;
               cursor: pointer;
             }
           }

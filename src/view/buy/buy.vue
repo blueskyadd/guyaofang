@@ -267,7 +267,7 @@ import headerTitle from "../../components/header/header"
             float: right;
             margin-bottom: .4rem;
             width: .94rem;
-            height:.33rem;
+            height:.4rem;
             cursor: pointer;
           }
         }

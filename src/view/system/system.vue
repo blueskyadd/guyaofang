@@ -34,7 +34,7 @@
                     <el-dialog :visible.sync="dialogVisible">
                       <img width="100%" :src="dialogImageUrl" alt="">
                     </el-dialog>
-                    <p>750*370 png. jpg格式</p>
+                    <p>375*150 png. jpg格式</p>
                   </div>
                 </td>
                 <td class="zhuti-photo" style="height: auto;">
@@ -65,7 +65,7 @@
                 </td>
                 <td class="zhuti-photo" style="height: auto;">
                   <div class="words" style="overflow: hidden">
-                    <label for="" style="float: left;">活动底图</label>
+                    <label for="" style="float: left;">新品底图</label>
                   </div>
                   <div class="activelyOne-photo">
                     <el-upload
@@ -86,7 +86,7 @@
                     <el-dialog :visible.sync="dialogVisible">
                       <img width="100%" :src="dialogImageUrl" alt="">
                     </el-dialog>
-                    <p>230*124 png. jpg格式</p>
+                    <p>115*62 png. jpg格式</p>
                   </div>
                 </td>
                 <td class="zhuti-photo" style="height: auto;">
@@ -112,7 +112,7 @@
                     <el-dialog :visible.sync="dialogVisible">
                       <img width="100%" :src="dialogImageUrl" alt="">
                     </el-dialog>
-                    <p>230*124 png. jpg格式</p>
+                    <p>115*62 png. jpg格式</p>
                   </div>
                 </td>
                 <td class="zhuti-photo" style="height: auto;">
@@ -138,7 +138,7 @@
                     <el-dialog :visible.sync="dialogVisible">
                       <img width="100%" :src="dialogImageUrl" alt="">
                     </el-dialog>
-                    <p>230*124 png. jpg格式</p>
+                    <p>115*62 png. jpg格式</p>
                   </div>
                 </td>
               </tr>
@@ -149,10 +149,6 @@
         </div>
       </div>
     </el-main>
-
-
-
-
   </div>
 </template>
 

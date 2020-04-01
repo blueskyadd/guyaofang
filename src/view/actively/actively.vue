@@ -303,7 +303,7 @@ export default {
           float: right;
           margin-bottom: 0.4rem;
           width: 0.94rem;
-          height: 0.33rem;
+          height: 0.4rem;
           cursor: pointer;
         }
       }
@@ -320,12 +320,11 @@ export default {
         }
       }
     }
+   
   }
   .el-button {
     padding: 0.12rem 0 !important;
   }
-  ::-webkit-scrollbar {
-    display: none;
-  }
+  
 }
 </style>

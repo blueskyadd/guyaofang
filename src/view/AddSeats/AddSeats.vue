@@ -7,7 +7,7 @@
             <div class="addshopp-tit">
               <p>
                 <img src="../../assets/img/goback.png" alt="" @click="$parent.isAddSeats = true,$parent.seatsID = -1 ">
-                <span>添加席位</span>
+                <span>{{seatsID == -1 ?'添加席位':'编辑席位'}}</span>
               </p>
             </div>
             <table>
@@ -46,7 +46,7 @@
                     <el-dialog :visible.sync="dialogVisible">
                       <img width="100%" :src="dialogImageUrl" alt="">
                     </el-dialog>
-                    <p>200*200 png. jpg格式</p>
+                    <p>60*60 png. jpg格式</p>
                   </div>
                 </td>
               </tr>

@@ -3,7 +3,7 @@
     <div class="header">
       <section>
         <div  class="login-box">
-          <p class="login-tit">坊管理系统</p>
+          <p class="login-tit">古垚坊管理系统</p>
 
 
           <el-select v-model="value" placeholder="请选择">

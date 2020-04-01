@@ -43,7 +43,7 @@
                 <el-dialog :visible.sync="dialogVisible">
                   <img width="100%" :src="dialogImageUrl" alt>
                 </el-dialog>
-                <p>750*370 png. jpg格式</p>
+                <p>23*23 png. jpg格式</p>
               </div>
             </td>
             <td class="zhuti-photo" style="height: auto;">
@@ -69,7 +69,7 @@
                 <el-dialog :visible.sync="dialogVisible">
                   <img width="100%" :src="dialogImageUrl" alt>
                 </el-dialog>
-                <p>750*370 png. jpg格式</p>
+                <p>23*23 png. jpg格式</p>
               </div>
             </td>
           </tr>

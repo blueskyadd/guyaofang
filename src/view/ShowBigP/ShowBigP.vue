@@ -147,9 +147,7 @@ export default {
         .then(res => {
           if (res.status == "200") {
             console.log(res.data);
-
             $("#vopods").attr("src", res.data[0].video);
-
             document.getElementById("vopods").addEventListener("ended", () => {
               this.num++;
               if (this.num >= res.data.length) {
@@ -183,30 +181,14 @@ export default {
     width: 100%;
     height: 100%;
     position: relative;
-    .Void_Box {
-      width: 100%;
-      height: 100%;
-      position: absolute;
-      left: 0;
-      top: 0;
-      video {
-        width: 100%;
-        height: 100%;
-        display: block;
-        object-fit: fill;
-        overflow: hidden;
-        border: 0;
-      }
-    }
     .order_Box {
       width: 4.77rem;
-      height: 100%;
+      height: 95%;
       background: rgba(214, 208, 233, 1);
       opacity: 0.4;
       position: absolute;
       right: 0;
       top: 0;
-      z-index: 2;
       background: url("../../assets/img/1.png") no-repeat;
       background-size: cover;
       font-family: haha;
@@ -234,13 +216,16 @@ export default {
           .ListDan {
             overflow: hidden;
             line-height: 0.6rem;
+            display: flex;
+            flex-wrap: nowrap;
+            justify-content: space-between;
             .zhuo {
               font-size: 0.28rem;
               font-family: haha;
               color: rgba(1, 1, 1, 1);
               float: left;
-              margin-right: 1.3rem;
               line-height: 0.6rem;
+              max-width: 1.5rem;
             }
             .shoopIng {
               width: 43%;
@@ -274,6 +259,23 @@ export default {
         }
       }
     }
+    .Void_Box {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      left: 0;
+      top: 0;
+      video {
+        width: 100%;
+        height: 100%;
+        display: block;
+        object-fit: fill;
+        overflow: hidden;
+        z-index: 2;
+        border: 0;
+      }
+    }
+
     .dan {
       width: 530px;
       height: 68px;

@@ -205,7 +205,7 @@ export default {
       display: block !important;
       font-size: 0.05rem;
       overflow: hidden;
-      height: 100%;
+      height: 99%;
       overflow-y: scroll;
       padding-right: .1rem;
       li {

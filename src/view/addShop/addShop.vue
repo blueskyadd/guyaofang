@@ -11,7 +11,7 @@
                   src="../../assets/img/goback.png"
                   alt
                 >
-                <span>添加商品</span>
+                <span>{{projectID == -1 ? '添加商品':'编辑商品'}}</span>
               </p>
             </div>
             <table>
@@ -72,10 +72,10 @@
                       type="text"
                       placeholder="填写商品介绍"
                       class=" project_Introduction"
-                      maxlength="30"
+                      maxlength="80"
                       v-model="project.projectIntroduction"
                     >
-                    <span class="project_Introduction_length">{{project.projectIntroduction.length}}/30</span>
+                    <span class="project_Introduction_length">{{project.projectIntroduction.length}}/80</span>
                   </td>
                   <td>
                     <label for>库存</label>
@@ -111,7 +111,7 @@
                         <img width="100%" :src="dialogImageUrl" alt>
                       </el-dialog>
 
-                      <p class="footer_text">750*370 png. jpg格式</p>
+                      <p class="footer_text">130*140 png. jpg格式</p>
                     </div>
                   </td>
                   <td class="zhuti-photo" style="height: auto;">
@@ -138,7 +138,7 @@
                         <img width="100%" :src="dialogImageUrl" alt>
                       </el-dialog>
 
-                      <p class="footer_text">750*370 png. jpg格式</p>
+                      <p class="footer_text">375*250 png. jpg格式</p>
                     </div>
                   </td>
                   <td class="zhuti-photo" style="height: auto;">
@@ -162,7 +162,7 @@
                       <el-dialog :visible.sync="dialogVisible">
                         <img width="100%" :src="dialogImageUrl" alt>
                       </el-dialog>
-                      <p class="footer_text">750*370 png. jpg格式</p>
+                      <p class="footer_text">宽375 png. jpg格式</p>
                     </div>
                   </td>
                 </tr>

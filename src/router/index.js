@@ -7,7 +7,6 @@ import stateScreen from '../components/stateScreen/stateScreen'
 Vue.use(Router)
 
 const router = new Router({
-  mode: 'history',
   routes: [
     {
       path: '/',

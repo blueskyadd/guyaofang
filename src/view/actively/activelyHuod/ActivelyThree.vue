@@ -55,6 +55,8 @@
                   :on-preview="handlePictureCardPreview"
                   :on-remove="handleRemove"
                   :multiple="true"
+                  :limit = 1
+                  :on-exceed = 'onExceed'
                   :before-upload="beforeAvatarUpload"
                   accept="image/png, image/jpeg"
                   :file-list='activelyBannerList'
@@ -65,7 +67,7 @@
                 <el-dialog :visible.sync="dialogVisible">
                   <img width="100%" :src="dialogImageUrl" alt>
                 </el-dialog>
-                <p>750*370 png. jpg格式</p>
+                <p>375*185 png. jpg格式</p>
               </div>
             </td>
             <td class="zhuti-photo" style="height: auto;">
@@ -89,7 +91,7 @@
                 <el-dialog :visible.sync="dialogVisible">
                   <img width="100%" :src="dialogImageUrl" alt>
                 </el-dialog>
-                <p>750*370 png. jpg格式</p>
+                <p>375*250 png. jpg格式</p>
               </div>
             </td>
             <td class="zhuti-photo" style="height: auto;">
@@ -113,7 +115,7 @@
                 <el-dialog :visible.sync="dialogVisible">
                   <img width="100%" :src="dialogImageUrl" alt>
                 </el-dialog>
-                <p>750*370 png. jpg格式</p>
+                <p>宽375 png. jpg格式</p>
               </div>
             </td>
           </tr>
@@ -169,6 +171,7 @@ export default {
         animalinitListId:[],//放生ID
         activelystartTime: '',
         activelystartTimedata:'',
+        animalinitList:[]
       },
       isLoading: false ,
       animalinitList: [],//放生列表
@@ -284,12 +287,17 @@ export default {
       return isJPG  || isPng ;
     },
 
+    /**@文件超出个数限制 */
+    onExceed(){
+        this.$message.error('最多添加一张图片');
+    },
 
     /**@获取放生列表 */
     getAnimalinitList(){
       this.$http.get(this.$conf.env.getAnimalinitList).then(res =>{
         if(res.status == '200'){
           this.animalinitList = res.data
+          this.actively.animalinitList = res.data
         }
       }).catch(err =>{
          this.$message.error('网络错误');
@@ -311,6 +319,7 @@ export default {
             this.actively.activelyBanner = res.data.front_image ? res.data.front_image  : ''; //活动主图
             this.activelyBannerList = res.data.front_image ? [{'url': res.data.front_image}]  : []; //活动主图
             this.actively.animalinitListId = res.data.animals ? res.data.animals : []
+            
             if(res.data.good_images &&res.data.good_images.length>0){
               res.data.good_images.forEach(element =>{
                 element.url = element.image

@@ -1,5 +1,5 @@
 <template>
-    <div class="big-box" v-show="flag">
+    <div class="big-box_three" v-show="flag">
         <div class="box"></div>
         <div class="model">
             <div class="header">
@@ -20,6 +20,10 @@
                     <el-table-column
                     prop="user"
                     label="姓名">
+                    </el-table-column>
+                    <el-table-column
+                    prop="mobile"
+                    label="手机号">
                     </el-table-column>
                 </el-table>
             </el-main>
@@ -51,8 +55,8 @@ export default {
           this.flag = false
       },
         setParentData(){
-        this.$parent.activelyId = -1
-        this.$parent.isRelease = 0
+            this.$parent.activelyId = -1
+            this.$parent.isRelease = 0
         },
       getActivelyOneUserList(){
           this.$http.get(this.$conf.env.getActivelyOneUserList +this.activelyId ).then( res =>{
@@ -79,7 +83,7 @@ export default {
 }
 </script>
 <style lang="scss" >
-    .big-box{
+    .big-box_three{
         position: fixed;
         width: 200%;
         height: 100%;

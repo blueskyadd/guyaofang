@@ -10,30 +10,12 @@
       </el-carousel>
       <div class="activelyRelease">
           <span><img src="../../../assets/img/free.png"/> 放生选择</span>
-          <div>
-              <ul>
-                  <li>
-                      <img src="../../../assets/img/loginbj.png" alt="">
-                      <span class="activelyReleaseName">金鱼</span>
-                      <span class="activelyReleasePrice">￥20/1条</span>
-                      <span class="activelyReleaseImg"><img src="../../../assets/img/addshopp.png" alt=""></span>
-                  </li>
-                  <li>
-                      <img src="../../../assets/img/loginbj.png" alt="">
-                      <span class="activelyReleaseName">金鱼</span>
-                      <span class="activelyReleasePrice">￥20/1条</span>
-                      <span class="activelyReleaseImg"><img src="../../../assets/img/addshopp.png" alt=""></span>
-                  </li>
-                  <li>
-                      <img src="../../../assets/img/loginbj.png" alt="">
-                      <span class="activelyReleaseName">金鱼</span>
-                      <span class="activelyReleasePrice">￥20/1条</span>
-                      <span class="activelyReleaseImg"><img src="../../../assets/img/addshopp.png" alt=""></span>
-                  </li>
-                  <li>
-                      <img src="../../../assets/img/loginbj.png" alt="">
-                      <span class="activelyReleaseName">金鱼</span>
-                      <span class="activelyReleasePrice">￥20/1条</span>
+          <div id="scroll">
+              <ul :style="{ width: getWidth + 'rem'}">
+                  <li v-for="item in animalinitList" :key="item.id" >
+                      <img :src="item.image" alt="">
+                      <span class="activelyReleaseName">{{item.name}}</span>
+                      <span class="activelyReleasePrice">￥{{item.price}}/1{{item.unit}}</span>
                       <span class="activelyReleaseImg"><img src="../../../assets/img/addshopp.png" alt=""></span>
                   </li>
               </ul>
@@ -66,8 +48,49 @@ export default {
     },
     data(){
         return{
+            animalinitList:[]
+        }
+        
+    },
+    methods:{
+        setAnimlinit(){
+            this.animalinitList = []
+            if(this.actively.animalinitListId && this.actively.animalinitListId.length){
+                this.actively.animalinitListId.forEach(element =>{
+
+                    if(this.actively.animalinitList && this.actively.animalinitList.length){
+                        this.actively.animalinitList.forEach( (value, index) =>{
+                            
+                            if(value.id == element){
+                                this.animalinitList.push(value)
+                                console.log(value)
+                            }else{
+                                // this.animalinitList.splice(1, index)
+                            }
+                        })
+                    }
+                })
+            }
         }
     },
+    mounted(){
+        this.setAnimlinit()
+    },
+    computed:{
+         getWidth() {
+            if (this.animalinitList.length) {
+                 return  this.animalinitList.length*1.3
+            }else{
+                return 0;
+                    
+            }
+        },
+    },
+    watch:{
+        'actively.animalinitListId'(newData, oldData){
+            this.setAnimlinit()
+        }
+    }
 };
 </script>
 <style lang="scss" scoped>
@@ -95,14 +118,14 @@ export default {
         div{
             ul{
                 display: flex;
-                width: 100%;
                 li{
-                    flex: 1;
                     margin: .3rem .1rem .2rem 0;
                     height: 1.2rem;
                     border: 1px solid #eee;
                     position: relative;
                     text-align: center;
+                    width: 1rem;
+                     flex-wrap: wrap;
                     span{
                         font-size: .2rem;
                         display: block;
@@ -138,7 +161,28 @@ export default {
                     margin-left: .2rem;
                 }
             }
+            
         }
+        #scroll{
+            overflow-x: scroll;
+        }
+            #scroll::-webkit-scrollbar {
+            /*滚动条整体样式*/
+            // width: 10px; /*高宽分别对应横竖滚动条的尺寸*/
+            height: .1rem;
+          }
+          #scroll::-webkit-scrollbar-thumb {
+            /*滚动条里面小方块*/
+            border-radius: 5px;
+            -webkit-box-shadow: inset 0 0 5px rgba(255, 255,255, 1);
+            background: rgba(0, 0,0, .2);
+          }
+          #scroll::-webkit-scrollbar-track {
+            /*滚动条里面轨道*/
+            -webkit-box-shadow: inset 0 0 5px rgba(255, 255, 255, 1);
+            border-radius: 0;
+          }
+        
     }
     .activelyRelease>span, .activelyDetail>span{
         font-size: .2rem;
@@ -188,6 +232,9 @@ export default {
         overflow: hidden;
         overflow-y: scroll;
     }
+     .block::-webkit-scrollbar {
+            display: none;
+        }
     //底部
     .active_footer{
         height: .9rem;

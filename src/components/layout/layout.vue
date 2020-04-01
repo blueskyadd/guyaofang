@@ -2,7 +2,7 @@
   <el-container>
     <el-aside width="3.2rem;height:100%;overflow:hidden;">
       <div class="aside-tit">
-        <img src="../../assets/img/logo.jpg" alt="">
+        <img :src="systemLogo" alt="">
       </div>
       <div class="nav-box">
         <nav>
@@ -78,6 +78,26 @@
 <script>
     export default {
         name: "layout",
+        data(){
+          return{
+            systemLogo: ''
+          }
+        },
+        methods:{
+          getLogo(){
+            this.$http.get(this.$conf.env.getSystemData).then(res =>{
+            if(res.status == '200'){
+              if(!res.data) return
+              this.systemLogo = res.data.logo ? res.data.logo : []
+            }
+          }).catch( err =>{
+            this.$message.error('网络错误');
+          })
+          }
+        },
+        mounted(){
+          this.getLogo()
+        }
     }
 </script>
 
@@ -106,6 +126,7 @@
 .el-container{
   width: 100%;
   height:100%;
+  overflow: hidden;
 }
 .right-box{
   display: flex;
@@ -119,10 +140,11 @@
   .aside-tit{
     width: 3.2rem;
     height:.98rem;
-    background: #7F63F4;
+    background: #fff;
     overflow: hidden;
     img{
       width: 100%;
+      height: 100%;
       display: block;
     }
     span{
